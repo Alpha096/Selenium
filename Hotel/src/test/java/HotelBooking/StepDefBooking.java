@@ -1,6 +1,8 @@
 package HotelBooking;
 
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -113,9 +115,16 @@ public class StepDefBooking {
 	    objhbpf.setPfemail("alpha@gmail.com");
 	    
 	    List<String> list = arg6.asList(String.class);
-	    objhbpf.setPfconfirm();
+	  
 	    
 	    for(int i=0; i<list.size();i++) {
+	    	objhbpf.getPfphone().clear();
+	    	objhbpf.setPfphone(list.get(i)); Thread.sleep(1000);
+	    	 objhbpf.setPfconfirm();
+	    	 driver.switchTo().alert();
+	 	    Thread.sleep(1000);
+	 	    driver.switchTo().alert().accept();
+	 	    Thread.sleep(1000);	    	 
 	    	if(Pattern.matches("^[7-9]{1}[0-9]{9}$",list.get(i))) {
 	    		System.out.println("********Matched" + list.get(i)+"**********");
 	    	}
@@ -124,30 +133,44 @@ public class StepDefBooking {
 	    		System.out.println("********Not Matched" + list.get(i)+"**********");
 	    	}
 	    }
-	    // List<YourType>, List<List<E>>, List<Map<K,V>> or Map<K,V>.
-	    // E,K,V must be a scalar (String, Integer, Date, enum etc)
-	    
+	    objhbpf.setPfconfirm();
 	}
 
 	@Then("^prompt user to enter valid contact details$")
 	public void prompt_user_to_enter_valid_contact_details() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	 
+		 driver.switchTo().alert();
+		    Thread.sleep(1000);
+		    driver.switchTo().alert().accept();
+		    Thread.sleep(1000);
+		    System.out.println("Enter valid number starting with 6,7,8,9 and of 10 digits");
 	}
 
-	/*@When("^User does not select number of people$")
-	public void user_does_not_select_number_of_people() throws Throwable {
-	    Select sel = new Select(driver.findElement(By.name("persons")));
-	    sel.selectByVisibleText("1");
-	    System.out.println("Only one person.");
-	    Thread.sleep(1000);
+	@When("^uer enters (\\d+)$")
+	public void uer_enters(String arg1) throws Throwable {
+		objhbpf.setPffirstName("Alpha");
+	    objhbpf.setPflastName("Beta");
+	    objhbpf.setPfemail("alpha@gmail.com");
+	    objhbpf.setPfphone("9685741230");
+	    objhbpf.setPfcity("Pune");
+	    objhbpf.setPfstate("Maharashtra");
+	    objhbpf.setPfpersons(arg1);
 	}
 
-	@Then("^prompt user to select the number of people$")
-	public void prompt_user_to_select_the_number_of_people() throws Throwable {
-	   objhbpf.setPfpersons("5");
-	   //driver.close();
-	}*/
+	@Then("^for (\\d+) number of guests, allocate (\\d+) number of rooms$")
+	public void for_number_of_guests_allocate_number_of_rooms(int arg1, int arg2) throws Throwable {
+		if(arg1<=3) {
+			System.out.println("**********Rooms:"+arg2);
+			assertEquals(1, arg2);
+		}
+		else if(arg1<=6) {
+			System.out.println("**********Rooms:"+arg2);
+			assertEquals(2, arg2);
+		}
+		else if(1 <=9) {
+			System.out.println("**********Rooms:"+arg2);
+			assertEquals(3, arg2);
+		}
+	}
 
 	/*@When("^User does not address$")
 	public void user_does_not_address() throws Throwable {

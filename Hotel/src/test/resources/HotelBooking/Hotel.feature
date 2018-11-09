@@ -30,10 +30,15 @@ When User enters mobile number that doesnt start with 6,7,8 or 9 and is not 10-d
 | |
 Then prompt user to enter valid contact details
 
-Scenario: Verify number of people for null inputs
+Scenario Outline: Verify number of people for null inputs
 Given User is on booking page
-When User does not select number of people
-Then prompt user to select the number of people
+When uer enters <numberOfGuests>
+Then for <numberOfGuests> number of guests, allocate <numberOfRooms> number of rooms
+Examples:
+|numberOfGuests|numberOfRooms|
+|2|1|
+|6|2|
+|9|3|
 
 Scenario: Verify address for null inputs
 Given User is on booking page
