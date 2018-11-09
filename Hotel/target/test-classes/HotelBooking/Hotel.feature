@@ -23,6 +23,11 @@ Then prompt user to enter mobile number
 Scenario: Verify valid mobile number
 Given User is on booking page
 When User enters mobile number that doesnt start with 6,7,8 or 9 and is not 10-digits
+|778556693|
+|2312321232|
+|1202321233|
+|9685741230|
+| |
 Then prompt user to enter valid contact details
 
 Scenario: Verify number of people for null inputs
